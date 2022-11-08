@@ -90,7 +90,8 @@ class LinkedList:
 
     #insert node after given_node
     #notice the given_node will never be inserted at front of list
-    def afterGivenNode(self, given_node, new_node_data):
+    #when given a node don't have to transverse list because you're given the actual node
+    def insertAfterGivenNode(self, given_node, new_node_data):
         if self.NodeExists(given_node):
             #create new_node
             new_node = Node(new_node_data)
@@ -101,7 +102,9 @@ class LinkedList:
             given_node.next = new_node
 
     #insert node before given_node
-    def beforeGivenNode(self, given_node, new_node_data):
+    #notice the given_node will never be the last node
+    #although given a node, singly linked list doesn't have a .prev so must transverse list to track prev_node
+    def insertBeforeGivenNode(self, given_node, new_node_data):
         if self.NodeExists(given_node):
             #create new node
             new_node = Node(new_node_data)
@@ -126,10 +129,7 @@ class LinkedList:
         
     #insert node after first occurence of node with given key
     #notice how node will never be inserted at front of list
-    def afterFirstKey(self, key, new_node_data):
-        if self.head is None:
-            print("list is empty")
-            return False
+    def insertAfterFirstKey(self, key, new_node_data):
         new_node = Node(new_node_data)
         temp = self.head
         
@@ -148,12 +148,9 @@ class LinkedList:
             temp.next = new_node
 
     #insert node before first occurence of node with given key
-    def beforeFirstKey(self, key, new_node_data):
-        #check if list is empty
-        if self.head is None:
-            print("list is empty")
-            return
-
+    #notice how node will never be last node
+    def insertBeforeFirstKey(self, key, new_node_data):
+        
         new_node = Node(new_node_data)
         temp = self.head
 
@@ -180,14 +177,14 @@ class LinkedList:
 
     #insert node after given index
     #notice that node will never be inserted at beginning of lists
-    def afterGivenIndex(self, index, new_node_data):
+    def insertAfterGivenIndex(self, index, new_node_data):
 
         if self.validIndex(index):
             new_node = Node(new_node_data)
 
             #if list is empty
             if self.head is None:
-                self.head = new_node
+                print("list is empty")
             #else, transverse list to index
             else:
                 temp = self.head
@@ -206,14 +203,15 @@ class LinkedList:
                     temp.next = new_node
 
     #insert node before given index
-    def beforeGivenIndex(self, index, new_node_data):
+    #notice how node will never be last node
+    def insertBeforeGivenIndex(self, index, new_node_data):
         if self.validIndex(index):
             
             new_node = Node(new_node_data)
             
             #if list is empty
             if self.head is None:
-                self.head = new_node
+                print("list is empty")
             #else, transverse list to index
             else:
                 #if index is 0 insert node at beginning of list
@@ -315,18 +313,18 @@ class LinkedList:
 if __name__ == '__main__':
 
     llist = LinkedList()
+    
+    #5 4 9 5 10 5
+    llist.printList()
+    
+    llist.deleteGivenIndex(0)
+    llist.printList()
+
+    '''
     llist.push(5)
     llist.push(10)
     llist.push(5)
     llist.push(9)
     llist.push(4)
     llist.push(5)
-    #5 9 5 10 5
-    llist.printList()
-    
-    llist.deleteGivenIndex(5)
-    llist.printList()
-
-    '''
-    
     '''
