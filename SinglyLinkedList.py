@@ -10,7 +10,7 @@ insert before given index
 
 delete given_node
 delete all nodes with given key
-delete node at given position
+delete node at given index
 
 '''
 
@@ -33,6 +33,31 @@ class LinkedList:
             print(temp.data, end = ' ')
             temp = temp.next
         print()
+
+    #check that index is valid (integer at least 0)
+    def validIndex(self, index):
+        if index < 0:
+            print("please provide an index that's at least 0")
+            return False
+        else:
+            return True
+
+    #check if given_node exists
+    def NodeExists(self, given_node):
+        if given_node is None:
+            print("given_node does not exist")
+            return False
+        else:
+            return True
+
+    #check if list is empty
+    def listIsNotEmpty(self):
+        print("here")
+        if self.head is None:
+            print("list is empty")
+            return False
+        else:
+            return True
 
     #insert node to beginning of list
     def push(self, new_node_data):
@@ -62,23 +87,6 @@ class LinkedList:
             while(temp.next is not None):
                 temp = temp.next
             temp.next = new_node
-
-    #check if given_node exists
-    def NodeExists(self, given_node):
-        if given_node is None:
-            print("given_node does not exist")
-            return False
-        else:
-            return True
-
-    #check if list is empty
-    def listIsNotEmpty(self):
-        print("here")
-        if self.head is None:
-            print("list is empty")
-            return False
-        else:
-            return True
 
     #insert node after given_node
     #notice the given_node will never be inserted at front of list
@@ -170,14 +178,6 @@ class LinkedList:
                 new_node.next = temp
                 prev_node.next = new_node
 
-    #check that index is valid (integer at least 0)
-    def validIndex(self, index):
-        if index < 0:
-            print("please provide an index that's at least 0")
-            return False
-        else:
-            return True
-
     #insert node after given index
     #notice that node will never be inserted at beginning of lists
     def afterGivenIndex(self, index, new_node_data):
@@ -240,7 +240,7 @@ class LinkedList:
 
     #delete given_node
     def deleteGivenNode(self, given_node):
-        if self.NodeExists:
+        if self.NodeExists(given_node):
             #if given_node is head, make next of current head new head
             #need case for head to reassign head
             if given_node == self.head:
@@ -256,38 +256,84 @@ class LinkedList:
 
     #delete all nodes with given key
     def deleteAllKey(self, key):
-        #if list is empty
-        if self.head is None:
-            print("list is empty")
-            return
+
+        temp = self.head
+        prev = None
+
         #if head has key
         #need case for head to reassign to new head
-        while(self.head.data == key):
-            self.head = self.head.next
-        
-        #transverse list
-        temp = self.head
-        while(temp.next):
-            if temp.next.data == key:
-                prev_node = temp
-                prev_node.next = temp.next
+        while (temp and temp.data == key):
+            self.head = temp.next
+            temp = self.head
+
+        # Delete occurrences other than head
+        while (temp):
+            # Search for the key to be deleted,
+            # keep track of the previous node
+            # as we need to change 'prev.next'
+            while (temp and temp.data != key):
+                prev = temp
                 temp = temp.next
-        
+
+            # If key was not present in linked list
+            if (temp is None):
+                print("key not found")
+            else:
+                # Unlink the node from linked list
+                prev.next = temp.next
+
+                # Update Temp for next iteration of outer loop
+                temp = prev.next
+
+    def deleteGivenIndex(self, index):
+        if self.validIndex(index):
+            #check if list is empty
+            if self.head is None:
+                print("list is empty")
+                return
+
+            #transverse list to index while keeping track of previous node
+            #currentPosition start at 0 (head is located at currentPosition 0)
+            currentPosition = 0
+            temp = self.head
+
+            #if index not out of range, at start of final while iteration currentPosition is index-1, 
+            #if index not out of range, at end of final while iteration currentPosition is index 
+            #if index out of range, at end of final while iteration currentPosition is final node which is why the 
+            #while statement has current<index so while does not continue if currentPosition=index or currentPosition is at final node 
+            #(the currentPosition+=1 happens at end of while iteration after condition is evaluated)
+            while(temp.next and currentPosition < index):
+                previous_node = temp
+                temp = temp.next
+                currentPosition += 1
+                print("node: " + str(temp.data) + " currentPosition: " + str(currentPosition) + " index: " + str(index))
+                
+            #if currentPosition < index, index out of range 
+            #index is higher than there are nodes in list
+            #current position is already at end of list currentPosition does not equal given index
+            if currentPosition < index:
+                print("index out of range")
+            #if index == 0, delete head
+            elif currentPosition == 0 :
+                self.head = temp.next
+            #if currentPosition == index, delete node at index
+            elif currentPosition == index:
+                previous_node.next = temp.next
+                temp = None
 
 if __name__ == '__main__':
 
     llist = LinkedList()
     llist.push(5)
+    llist.push(10)
+    llist.push(5)
+    llist.push(9)
     llist.push(4)
     llist.push(5)
-    llist.push(5)
-    llist.append(9)
-    llist.append(16)
-    llist.append(100)
-    
+    #5 9 5 10 5
     llist.printList()
     
-    llist.deleteAllKey(5)
+    llist.deleteGivenIndex(2)
     llist.printList()
 
     '''
