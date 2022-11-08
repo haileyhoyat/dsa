@@ -281,45 +281,36 @@ class LinkedList:
             else:
                 # Unlink the node from linked list
                 prev.next = temp.next
-
                 # Update Temp for next iteration of outer loop
                 temp = prev.next
 
     def deleteGivenIndex(self, index):
         if self.validIndex(index):
-            #check if list is empty
+            #if list is empty
             if self.head is None:
                 print("list is empty")
-                return
+            #else, transverse list to index
+            else:
+                #if index is 0 reassign head
+                #need case for index 0 because need to reassign head
+                if index == 0:
+                    self.head = self.head.next
+                #else, transverse list to index
+                else:
+                    temp = self.head
+                    count = 0
 
-            #transverse list to index while keeping track of previous node
-            #currentPosition start at 0 (head is located at currentPosition 0)
-            currentPosition = 0
-            temp = self.head
+                    while(count != index and temp.next):
+                        prev_node = temp
+                        temp = temp.next
+                        count += 1
 
-            #if index not out of range, at start of final while iteration currentPosition is index-1, 
-            #if index not out of range, at end of final while iteration currentPosition is index 
-            #if index out of range, at end of final while iteration currentPosition is final node which is why the 
-            #while statement has current<index so while does not continue if currentPosition=index or currentPosition is at final node 
-            #(the currentPosition+=1 happens at end of while iteration after condition is evaluated)
-            while(temp.next and currentPosition < index):
-                previous_node = temp
-                temp = temp.next
-                currentPosition += 1
-                print("node: " + str(temp.data) + " currentPosition: " + str(currentPosition) + " index: " + str(index))
-                
-            #if currentPosition < index, index out of range 
-            #index is higher than there are nodes in list
-            #current position is already at end of list currentPosition does not equal given index
-            if currentPosition < index:
-                print("index out of range")
-            #if index == 0, delete head
-            elif currentPosition == 0 :
-                self.head = temp.next
-            #if currentPosition == index, delete node at index
-            elif currentPosition == index:
-                previous_node.next = temp.next
-                temp = None
+                    #if count < index index out of range
+                    if count < index:
+                        print("index out of range")
+                    #else, prev_node to temp.next to detach temp from linked list
+                    else:
+                        prev_node.next = temp.next
 
 if __name__ == '__main__':
 
@@ -333,7 +324,7 @@ if __name__ == '__main__':
     #5 9 5 10 5
     llist.printList()
     
-    llist.deleteGivenIndex(2)
+    llist.deleteGivenIndex(5)
     llist.printList()
 
     '''
