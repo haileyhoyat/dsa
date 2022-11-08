@@ -189,7 +189,8 @@ class LinkedList:
             else:
                 temp = self.head
                 count = 0
-                
+                #the reason you need to check for temp.next is because if you get to the end of the while loop the last temp will be None and you can't add a node after None
+                # so you need to stop the while before you get to None 
                 while(count != index and temp.next):
                     temp = temp.next
                     count += 1
@@ -214,9 +215,8 @@ class LinkedList:
                 print("list is empty")
             #else, transverse list to index
             else:
-                #if index is 0 insert node at beginning of list
-                #need case for index 0 because beginning node does not hae prev_node and new_node needs to become head
-                
+                #the reason you need to check for temp.next is because if you get to the end of the while loop the last temp will be None and you can't add a node before None
+                # so you need to stop the while before you get to None 
                 if index == 0:
                     new_node.next = self.head
                     self.head = new_node
@@ -298,6 +298,9 @@ class LinkedList:
                     temp = self.head
                     count = 0
 
+                    #the reason you need to check for temp.next is because if you get to the end of the while loop the last temp will be None
+                    # and you can't add a node before or after None
+                    # so you need to stop the while before you get to None 
                     while(count != index and temp.next):
                         prev_node = temp
                         temp = temp.next

@@ -204,6 +204,8 @@ class DoublyLinkedList:
             else:
                 temp = self.head
                 count = 0
+                #the reason you need to check for temp.next is because if you get to the end of the while loop the last temp will be None and you can't add a node after None
+                # so you need to stop the while before you get to None 
                 while(count != index and temp.next):
                     temp = temp.next
                     count += 1
@@ -244,6 +246,8 @@ class DoublyLinkedList:
                 else:
                     temp = self.head
                     count = 0
+                    #the reason you need to check for temp.next is because if you get to the end of the while loop the last temp will be None and you can't add a node before None
+                    # so you need to stop the while before you get to None 
                     while(count != index and temp.next):
                         temp = temp.next
                         count += 1
@@ -319,6 +323,9 @@ class DoublyLinkedList:
                     temp = self.head
                     count = 0
 
+                    #the reason you need to check for temp.next is because if you get to the end of the while loop the last temp will be None
+                    # and you can't add a node before or after None
+                    # so you need to stop the while before you get to None 
                     while(count != index and temp.next):
                         temp = temp.next
                         count += 1
@@ -347,7 +354,7 @@ if __name__ == '__main__':
     dll.append(10)
     dll.printList()
 
-    dll.deleteGivenIndex(4)
+    dll.insertAfterIndex(6, 100)
     dll.printList()
     
 
